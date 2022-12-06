@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -26,7 +27,7 @@ public class CartServiceImpl implements CartService {
     private CartItemRepository cartItemRepository;
 
     @Autowired
-    private ProductRepository dishRepository;
+    private ProductRepository productRepository;
 
     @Override
     public Cart getCartById(Long cartId) throws NoSuchCartExistsException {
@@ -45,7 +46,7 @@ public class CartServiceImpl implements CartService {
         } catch (Exception e) {
             throw new NoSuchCartExistsException("Cart id does not exists");
         }
-        Product product = ProductRepository.findById(productId).get();
+        Product product = productRepository.findById(productId).get();
         List<CartItem> cartItems = cart.getCartItems();
 
         try {
